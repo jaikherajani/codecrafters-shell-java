@@ -12,6 +12,9 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
 
+            if ("exit 0".equals(input))
+                break;
+
             List<String> supportedCommands = new ArrayList<>();
             if (!supportedCommands.contains(input)) {
                 System.out.println(input + ": not found");
