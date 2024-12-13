@@ -14,17 +14,23 @@ public class Main {
 
             String[] ops = input.split(" ", 2);
 
-            if ("exit".equals(ops[0]) && "0".equals(ops[1]))
-                break;
-
             if (SupportedCommands.findByValue(ops[0]) == null) {
                 System.out.println(input + ": not found");
             }
             else {
                 SupportedCommands command = SupportedCommands.findByValue(ops[0]);
                 switch (command) {
-                    case SupportedCommands.ECHO:
+                    case EXIT:
+                        System.exit(0);
+                        break;
+                    case ECHO:
                         System.out.println(ops[1]);
+                        break;
+                    case TYPE:
+                        if (SupportedCommands.findByValue(ops[1]) != null)
+                            System.out.println(ops[1] + " is a shell builtin");
+                        else
+                            System.out.println(ops[1] + ": not found");
                 }
             }
         }
