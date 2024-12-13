@@ -5,14 +5,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         // Uncomment this block to pass the first stage
-         System.out.print("$ ");
+        // infinite loop for REPL
+        while (true) {
+            System.out.print("$ ");
 
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
 
-        List<String> supportedCommands = new ArrayList<>();
-        if (!supportedCommands.contains(input)){
-            System.out.println(input+": not found");
+            List<String> supportedCommands = new ArrayList<>();
+            if (!supportedCommands.contains(input)) {
+                System.out.println(input + ": not found");
+            }
         }
     }
 }
