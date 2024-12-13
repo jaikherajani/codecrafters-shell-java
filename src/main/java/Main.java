@@ -1,10 +1,15 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         // Uncomment this block to pass the first stage
+
         // infinite loop for REPL
         while (true) {
             System.out.print("$ ");
@@ -29,10 +34,26 @@ public class Main {
                     case TYPE:
                         if (SupportedCommands.findByValue(ops[1]) != null)
                             System.out.println(ops[1] + " is a shell builtin");
-                        else
-                            System.out.println(ops[1] + ": not found");
+                        else {
+                            String path = getPath(ops[1]);
+                            if (path != null)
+                                System.out.println(ops[1] + " is " + path);
+                            else
+                                System.out.println(ops[1] + ": not found");
+                        }
+                        break;
                 }
             }
         }
+    }
+
+    private static String getPath(String name){
+        // read PATH value
+        for(String path : System.getenv("PATH").split(":")){
+            Path fullPath = Path.of(path, name);
+            if (Files.isRegularFile(fullPath))
+                return fullPath.toString();
+        }
+        return null;
     }
 }
