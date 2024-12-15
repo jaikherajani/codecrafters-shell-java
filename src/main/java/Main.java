@@ -1,11 +1,7 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -21,7 +17,11 @@ public class Main {
 
             String[] ops = input.split(" ", 2);
 
-            if (SupportedCommands.findByValue(ops[0]) == null) {
+            BuiltInCommands command = BuiltInCommands.findByValue(ops[0]);
+            if (command != null) {
+                System.out.println(command.getOutput(ops.length > 1 ? ops[1] : ""));
+            }
+            else {
                 String path = getPath(ops[0]);
                 if (path != null) {
                     //System.out.println(ops[1] + " is " + path);
@@ -37,34 +37,10 @@ public class Main {
                 else
                     System.out.println(ops[0] + ": not found");
             }
-            else {
-                SupportedCommands command = SupportedCommands.findByValue(ops[0]);
-                switch (command) {
-                    case EXIT:
-                        System.exit(0);
-                        break;
-                    case ECHO:
-                        System.out.println(ops[1]);
-                        break;
-                    case TYPE:
-                        if (SupportedCommands.findByValue(ops[1]) != null)
-                            System.out.println(ops[1] + " is a shell builtin");
-                        else {
-                            String path = getPath(ops[1]);
-                            if (path != null)
-                                System.out.println(ops[1] + " is " + path);
-                            else
-                                System.out.println(ops[1] + ": not found");
-                        }
-                        break;
-                    case PWD:
-                        System.out.println(System.getProperty("user.dir"));
-                }
-            }
         }
     }
 
-    private static String getPath(String name){
+    public static String getPath(String name){
         // read PATH value
         for(String path : System.getenv("PATH").split(":")){
             Path fullPath = Path.of(path, name);
