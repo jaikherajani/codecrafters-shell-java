@@ -57,6 +57,8 @@ public class Main {
                                 System.out.println(ops[1] + ": not found");
                         }
                         break;
+                    case PWD:
+                        System.out.println(System.getProperty("user.dir"));
                 }
             }
         }

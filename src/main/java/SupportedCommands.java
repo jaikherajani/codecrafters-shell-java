@@ -1,7 +1,8 @@
 public enum SupportedCommands {
     ECHO("echo"),
     TYPE("type"),
-    EXIT("exit");
+    EXIT("exit"),
+    PWD("pwd");
 
     private String value;
 
