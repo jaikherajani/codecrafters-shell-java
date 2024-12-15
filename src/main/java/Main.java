@@ -19,7 +19,7 @@ public class Main {
 
             BuiltInCommands command = BuiltInCommands.findByValue(ops[0]);
             if (command != null) {
-                System.out.println(command.getOutput(ops.length > 1 ? ops[1] : ""));
+                command.getOutput(ops.length > 1 ? ops[1] : "");
             }
             else {
                 String path = getPath(ops[0]);

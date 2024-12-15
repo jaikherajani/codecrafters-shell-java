@@ -1,41 +1,49 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public enum BuiltInCommands implements ICommand {
     ECHO("echo") {
         @Override
-        public String getOutput(String param) {
-            return param;
+        public void getOutput(String param) {
+            System.out.println(param);
         }
     },
     TYPE("type") {
         @Override
-        public String getOutput(String param) {
+        public void getOutput(String param) {
             if (BuiltInCommands.findByValue(param) != null)
-                return param + " is a shell builtin";
+                System.out.println(param + " is a shell builtin");
             else {
                 String path = Main.getPath(param);
                 if (path != null)
-                    return param + " is " + path;
+                    System.out.println(param + " is " + path);
                 else
-                    return param + ": not found";
+                    System.out.println(param + ": not found");
             }
         }
     },
     EXIT("exit") {
         @Override
-        public String getOutput(String param) {
+        public void getOutput(String param) {
             System.exit(0);
-            return "";
         }
     },
     PWD("pwd") {
         @Override
-        public String getOutput(String param) {
-            return System.getProperty("user.dir");
+        public void getOutput(String param) {
+            System.out.println(System.getProperty("user.dir"));
         }
     },
     CD("cd") {
         @Override
-        public String getOutput(String param) {
-            return System.getProperty("user.dir");
+        public void getOutput(String param) {
+            Path fullPath = Paths.get(param);
+            if (Files.exists(fullPath)) {
+                System.setProperty("user.dir", param);
+            }
+            else
+                System.out.println("cd: "+ param + ": No such file or directory");
         }
     };
 
