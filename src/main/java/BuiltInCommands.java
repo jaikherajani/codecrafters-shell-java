@@ -38,9 +38,14 @@ public enum BuiltInCommands implements ICommand {
     CD("cd") {
         @Override
         public void getOutput(String param) {
-            Path fullPath = Paths.get(param);
-            if (Files.exists(fullPath)) {
-                System.setProperty("user.dir", param);
+            String cud = System.getProperty("user.dir");
+            if (!param.startsWith("/")){
+                // relative
+                param = cud + "/" + param;
+            }
+            Path fullPath = Path.of(param).normalize();
+            if (Files.exists(fullPath) && Files.isDirectory(fullPath) && !cud.equalsIgnoreCase(param)) {
+                System.setProperty("user.dir", fullPath.toString());
             }
             else
                 System.out.println("cd: "+ param + ": No such file or directory");

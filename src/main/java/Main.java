@@ -35,7 +35,7 @@ public class Main {
                     }
                 }
                 else
-                    System.out.println(ops[0] + ": not found");
+                    System.out.println(ops[0] + ": command not found");
             }
         }
     }
