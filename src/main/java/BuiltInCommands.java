@@ -39,7 +39,9 @@ public enum BuiltInCommands implements ICommand {
         @Override
         public void getOutput(String param) {
             String cud = System.getProperty("user.dir");
-            if (!param.startsWith("/")){
+            if (param.startsWith("~"))
+                param = System.getenv("HOME");
+            else if (!param.startsWith("/")){
                 // relative
                 param = cud + "/" + param;
             }
